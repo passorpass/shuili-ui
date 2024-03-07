@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>水利知识库--登录</title>
+  <!-- 添加页面图标 -->
+  <link rel="icon" type="image/png" href="./shuili/img/water.png">
+  <!-- 引入 Element UI 样式 -->
+  <link rel="stylesheet" href="./shuili/js/vendor/plugins/element-ui/index.css">
+  <style>
+    #app {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100vh;
+      background-image: url('./shuili/img/background.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .login-card {
+      width: 400px;
+      margin-right: 50px;
+      background-color: rgba(173, 216, 230, 0.5);
+    }
+
+    .el-input__inner {
+      background-color: transparent; /* 修改验证码输入框的背景颜色为透明 */
+    }
+
+    .el-form-item.is-required .el-input__inner,
+    .el-form-item.is-required .el-input__inner:hover {
+      background-color: rgba(173, 216, 230, 0.5); /* 修改验证码输入框的背景颜色为淡蓝色 */
+    }
+
+    /* 添加样式以将注脚放置在背景图片下方 */
+    body {
+      position: relative; /* 设置body为相对定位 */
+    }
+    footer {
+      position: absolute; /* 设置footer为绝对定位 */
+      bottom: 2px; /* 距离底部20像素 */
+      left: 50%; /* 居中 */
+      transform: translateX(-50%); /* 居中 */
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+<div id="app">
+  <el-card class="login-card">
+    <h2 slot="header" style="text-align: center; color: black;">兴修水利,千秋大业,利国利民</h2>
+    <el-form :model="loginForm" ref="loginForm" :rules="rules" label-width="80px">
+      <el-form-item label="账号" prop="name">
+        <el-input v-model="loginForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="密码" prop="pwd">
+        <el-input type="password" v-model="loginForm.pwd"></el-input>
+      </el-form-item>
+      <el-form-item label="验证码" prop="captcha">
+        <el-input v-model="loginForm.captcha" style="width: 180px;"></el-input>
+        <br> <!-- 增加垂直间距 -->
+        <img :src="captchaImageUrl" alt="captcha" @click="refreshCaptcha" style="cursor: pointer; margin-top: 10px;"> <!-- 添加上外边距 -->
+      </el-form-item>
+      <el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('loginForm')" style="display: block; width: 100%;">登录</el-button>
+          <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <el-button type="text" @click="goToResetPwd">忘记密码？</el-button>
+            <el-button type="text" @click="goToRegister">还没有账号，赶紧注册一个</el-button>
+          </div>
+        </el-form-item>
+      </el-form-item>
+    </el-form>
+  </el-card>
+</div>
+
+<footer>
+  <p>版权所有 &copy; 2024 水利知识库</p>
+</footer>
+
+<!-- 引入 Vue.js 和 Element UI 库 -->
+<script src="./shuili/js/vendor/plugins/vue/vue.js"></script>
+<script src="./shuili/js/vendor/plugins/element-ui/index.js"></script>
+<!-- 引入 Axios 库 -->
+<script src="./shuili/js/vendor/plugins/axios/axios.min.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        loginForm: {
+          name: '',
+          pwd: '',
+          captcha: '',
+          nowTime: new Date() // 设置 nowTime 为当前时间
+        },
+        rules: {
+          name: [
+            {required: true, message: '请输入用户名', trigger: 'blur'}
+          ],
+          pwd: [
+            {required: true, message: '请输入密码', trigger: 'blur'}
+          ],
+          captcha: [
+            {required: true, message: '验证码不能为空', trigger: 'blur'}
+          ]
+        },
+        captchaImageUrl: '' // 添加验证码图片的URL
+      };
+    },
+    mounted() {
+      this.refreshCaptcha(); // 页面加载时获取验证码
+    },
+    methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            // 构造请求参数
+            const requestBody = {
+              name: this.loginForm.name,
+              pwd: this.loginForm.pwd,
+              captcha: this.loginForm.captcha,
+              nowTime: new Date()// 添加验证码参数
+            };
+
+            // 发送 POST 请求
+            axios.post('http://localhost:82/user/login', requestBody)
+              .then(response => {
+                // 请求成功的处理
+                if (response.data.code === 200) {
+                  // 登录成功
+                  this.$message({
+                    type: 'success',
+                    message: '登录成功',
+                    duration: 500
+                  });
+
+                  // 保存token和userName到本地存储
+                  localStorage.setItem('token', response.data.data.token);
+                  localStorage.setItem('userName', response.data.data.userName);
+
+
+                  // 跳转到 index.html 页面
+                  window.location.href = '/shuili/test.html';
+                } else {
+                  // 登录失败
+                  this.$message.error(response.data.message);
+                }
+              })
+              .catch(error => {
+                // 请求失败的处理
+                console.error(response.data.message);
+              });
+          }
+        });
+      },
+      //注册页面
+      goToRegister() {
+        // 跳转到 register.html 页面
+        window.location.href = './shuili/page/login/register.html';
+      },
+      //忘记密码
+      goToResetPwd() {
+        // 跳转到 resetpwd.html 页面
+        window.location.href = './shuili/page/login/resetpwd.html';
+      },
+      refreshCaptcha() {
+        // 发送 GET 请求获取验证码图片
+        axios.get('http://localhost:82/user/getCaptcha', { responseType: 'blob' })
+          .then(response => {
+            // 获取到验证码图片 Blob 对象
+            const blob = new Blob([response.data], { type: 'image/jpeg' });
+            // 使用 URL.createObjectURL() 创建图片 URL
+            this.captchaImageUrl = URL.createObjectURL(blob);
+          })
+          .catch(error => {
+            console.error('获取验证码失败', error);
+          });
+      }
+    }
+  });
+</script>
+</body>
+</html>

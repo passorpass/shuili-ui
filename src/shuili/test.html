@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <!-- 引入Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <!-- 引入Element UI -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <!-- 引入Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- 引入检查token的函数 -->
+  <script src="./js/checkToken.js"></script>
+</head>
+<body>
+<div id="app">
+  <el-button @click="sendGetRequest">点击发送请求</el-button>
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      token: ''
+    },
+    methods: {
+      sendGetRequest() {
+        // 获取token信息
+        if (!checkTokenAndRedirect()) {
+          // 如果未登录，checkTokenAndRedirect 函数内部已经处理了跳转登录页面，这里就不需要再处理其他逻辑了
+          return;
+        }
+
+        // 发送GET请求，并添加token信息到请求头
+        axios.get('http://localhost:82/user/all', {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        })
+          .then(response => {
+            // 请求成功处理响应数据
+            console.log(response.data);
+          })
+          .catch(error => {
+            // 请求失败处理错误
+            console.error('请求失败:', error);
+          });
+      }
+    },
+    mounted() {
+      // 在页面加载时获取token信息
+      this.token = localStorage.getItem('token');
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="content">
+        <div class="box">
+            <div class="sigin-in-btn-wrapper">
+                <div class="sigin-in-btn" id="sigin-in-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div id="login-wrapper" class="login-wrapper">
+                <div class="sigin-in-wrapper" id="sigin-in-wrapper">
+                    <div class="sigin-form" id="sigin-form">
+                        <img src="./asset/clos.png" class="close" alt="close" id="close">
+                        <h1>Sigin Up For Free, Now.</h1>
+                        <div class="sigin-form-wrapper">
+                            <div class="form-item">
+                                <span class="form-title">Username</span>
+                                <input type="text" class="ipt username">
+                            </div>
+                            <div class="form-item">
+                                <span class="form-title">Email</span>
+                                <input type="text" class="ipt email">
+                            </div>
+                            <div class="form-item">
+                                <span class="form-title">Password</span>
+                                <input type="password" class="ipt password">
+                            </div>
+                            <button class="sigin-btn">SIGN UP</button>
+                        </div>
+                        <div class="forgot-text-wrapper">
+                            <span class="forgot-text">
+                                Forgot Password
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="title">
+                    <div class="top-title">
+                        maos
+                    </div>
+                    <span class="title-tips">
+                        Log In to Platform
+                    </span>
+                </div>
+                <div class="login-form-wrapper">
+                    <div class="input-wrapper">
+                        <span class="input-tips">E-Mail</span>
+                        <input type="text" class="login-input input-email">
+                    </div>
+                    <div class="input-wrapper">
+                        <span class="input-tips">Password</span>
+                        <input type="password" class="login-input input-password">
+                    </div>
+                    <button class="login-btn">SIGN IN</button>
+                </div>
+                <div class="forgot-pwd-wrapper">
+                    <span class="forgot-pwd-text">Forgot Your Password?</span>
+                </div>
+                <div class="mask" id="mask"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let siginInBtn = document.getElementById('sigin-in-btn');
+    let siginInWrapper = document.getElementById('sigin-in-wrapper');
+    let loginWrapper = document.getElementById('login-wrapper');
+    let siginForm = document.getElementById('sigin-form');
+    let close = document.getElementById('close');
+    let mask = document.getElementById('mask');
+
+    //圆形运动轨迹(x-a)2+(x-b)2=r2
+    let m = 0;
+    let n = 0;
+    let y = 0;
+    let x = 0;
+    let r = 350;
+    let a = 0;
+    let b = 0;
+    let timer;
+
+    function move() {
+        if (m > 0) {
+            x = m;
+            Straight();
+            if (x < 100) {
+                siginInWrapper.classList.add("sigin-in-active");
+                siginInWrapper.style.width = '26vw';
+                siginInWrapper.style.height = '40vh';
+                siginInWrapper.style.transform = 'translate(-13vw, -45%)';
+                siginForm.classList.add('sigin-form-active');
+                siginForm.style.opacity = '1';
+                siginForm.style.transitionDelay = '1s';
+                siginForm.style.transform = 'translate(-50%, -50%)';
+                mask.style.visibility = 'visible';
+                mask.style.opacity = '1';
+            }
+        }
+        else {
+            x = n;
+            Reverse();
+            if (x <= 0) {
+                clearInterval(timer);
+                m = 350;
+                n = 0;
+                loginWrapper.classList.add('login-wrapper-active');
+                siginInBtn.style.opacity = '0';
+                setTimeout(() => {
+                    loginWrapper.style.overflow = 'visible';
+                    siginInWrapper.style.height = '62vh';
+                }, 700)
+                m = 0;
+                n = 0;
+            }
+        }
+        siginInBtn.style.right = -x + 'px';
+        siginInBtn.style.top = -parseInt(y) + 'px';
+    }
+    function Straight() {
+        m -= 1;
+        y = -(Math.sqrt(Math.pow(r, 2) - Math.pow(m - a, 2)) + b);
+    }
+    function Reverse() {
+        n += 1;
+        y = -(Math.sqrt(Math.pow(r, 2) - Math.pow(m - a, 2)) + b);
+    }
+
+    function moveFun() {
+        m = 350;
+        move();
+        timer = setInterval(move, 2);
+        //放置注册按钮在运动过程中再次点击出现bug
+        siginInBtn.onclick = function () {
+        }
+    }
+    siginInBtn.onclick = function () {
+        moveFun();
+    }
+    close.onclick = function () {
+        siginInWrapper.style.transform = 'translate(0, 0)';
+        siginInWrapper.style.width = '150px';
+        siginInWrapper.style.height = '150px';
+        loginWrapper.style.overflow = 'hidden';
+        siginForm.style.opacity = '0';
+        siginForm.style.transitionDelay = '0s';
+        siginForm.style.transform = 'translate(-50%, -45%)';
+        siginInBtn.style.top = '-25px';
+        siginInBtn.style.right = '-7vw';
+        siginInBtn.style.opacity = '1';
+        siginInBtn.style.transition = '0';
+        mask.style.opacity = '0';
+        mask.style.visibility = 'hidden';
+        siginInBtn.onclick = function () {
+            moveFun();
+        }
+    }
+</script>
+
+</html>

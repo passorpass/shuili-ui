@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<button onclick="sendGetRequest()">点击发送请求</button>
+
+<script>
+  function sendGetRequest() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:82/user/all", true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.responseText);
+        // 在这里可以处理响应数据，例如更新页面内容等操作
+      }
+    };
+    xhr.send();
+  }
+</script>
+</body>
+</html>

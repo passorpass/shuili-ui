@@ -1,0 +1,234 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(239, 245, 255);
+  position: relative;
+}
+.content .box {
+  width: 20vw;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-55%, -50%);
+}
+.content .box .sigin-in-btn {
+  width: 100px;
+  height: 100px;
+  background-color: rgb(62, 102, 255);
+  box-shadow: 0px 0px 10px rgb(89, 120, 245);
+  border-radius: 20px;
+  position: absolute;
+  right: -7vw;
+  top: -25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s;
+  z-index: 1;
+}
+.content .box .sigin-in-btn:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgb(25, 57, 187);
+}
+.content .box .sigin-in-btn span {
+  background-color: #fff;
+  height: 5px;
+  margin: 8px;
+  border-radius: 10px;
+}
+.content .box .sigin-in-btn span:first-child {
+  width: 40px;
+  margin-right: -30px;
+}
+.content .box .sigin-in-btn span:nth-child(2) {
+  width: 70px;
+}
+.content .box .sigin-in-btn span:last-child {
+  width: 40px;
+  margin-left: -30px;
+}
+.content .box .login-wrapper {
+  width: 100%;
+  height: 50%;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 15%;
+  box-shadow: 0px 0px 10px #ebebeb;
+  position: relative;
+  transition: 0.5;
+  overflow: hidden;
+}
+.content .box .login-wrapper .sigin-in-wrapper {
+  width: 150px;
+  height: 150px;
+  background-color: rgb(61, 102, 255);
+  position: absolute;
+  right: -50%;
+  top: 40%;
+  border-radius: 20px;
+  padding: 5%;
+  box-sizing: border-box;
+  z-index: 2;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form {
+  width: 80%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -45%);
+  color: #fff;
+  opacity: 0;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form .close {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  top: -40px;
+  cursor: pointer;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form h1 {
+  font-size: 25px;
+  font-weight: 900;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form .sigin-form-wrapper .form-item {
+  margin: 10px 0;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form .sigin-form-wrapper .form-item .form-title {
+  font-weight: 200;
+  margin-bottom: 5px;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form .sigin-form-wrapper .form-item .ipt {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  outline: none;
+  background-color: rgb(61, 102, 255);
+  padding: 10px;
+  box-sizing: border-box;
+  font-weight: 200;
+  font-size: 25px;
+  color: #fff;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form .sigin-form-wrapper .sigin-btn {
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  color: rgb(61, 102, 255);
+  font-size: 15px;
+  border-radius: 10px;
+  border: 0;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form .forgot-text-wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+.content .box .login-wrapper .sigin-in-wrapper .sigin-form .forgot-text-wrapper .forgot-text {
+  color: #fff;
+  margin: 20px 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+.content .box .login-wrapper .mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(255, 255, 255, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  opacity: 0;
+  transform: 1s;
+  visibility: hidden;
+}
+.content .box .title {
+  font-weight: 900;
+  margin: 0 0 5% 0;
+  font-family: "Balbek Personal Use Only", Times, serif;
+  letter-spacing: 2px;
+}
+.content .box .title .top-title {
+  color: rgb(61, 102, 255);
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+.content .box .title .title-tips {
+  color: rgb(31, 21, 103);
+  font-size: 40px;
+}
+.content .box .login-form-wrapper .input-wrapper .input-tips {
+  color: rgb(109, 102, 153);
+  margin: 10px 0;
+  font-weight: bold;
+  display: inline-block;
+  font-family: "Lucida Sans", Times, serif;
+}
+.content .box .login-form-wrapper .input-wrapper .login-input {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid rgb(177, 173, 198);
+  display: block;
+  outline: none;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 20px;
+  font-weight: 100;
+  color: rgb(152, 145, 187);
+  font-family: "Lucida Sans", Times, serif;
+}
+.content .box .login-form-wrapper .input-wrapper .login-input:focus {
+  border: 1px solid rgb(73, 105, 225);
+}
+.content .box .login-form-wrapper .login-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  background-color: rgb(31, 21, 103);
+  border: 0;
+  color: #fff;
+  font-size: 20px;
+  margin: 20px 0;
+  font-family: "Lucida Sans", Times, serif;
+  font-weight: bold;
+}
+.content .box .forgot-pwd-wrapper {
+  width: 100%;
+  text-align: center;
+}
+.content .box .forgot-pwd-wrapper .forgot-pwd-text {
+  color: rgb(194, 193, 211);
+  font-weight: bold;
+}
+.content .box .forgot-pwd-wrapper .forgot-pwd-text:hover {
+  cursor: pointer;
+}
+
+.sigin-in-active {
+  transition: 1s;
+  transition-timing-function: ease-in-out;
+  border-radius: 60px;
+}
+
+.login-wrapper-active {
+  transition-delay: 6s;
+  transition-property: overflow;
+}
+
+.sigin-fomr-active {
+  opacity: 1;
+  transition-timing-function: ease;
+  transition: 0.8s;
+}/*# sourceMappingURL=style.css.map */
